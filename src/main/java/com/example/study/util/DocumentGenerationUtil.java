@@ -36,7 +36,7 @@ public class DocumentGenerationUtil {
                 //生成模板实现
                 .produceType(EngineTemplateType.freemarker)
                 //自定义文件名称
-                .fileName("guoshou_eam2022-12-08").build();
+                .fileName("guoshou_eam2022-12-21").build();
 
         //忽略表
         ArrayList<String> ignoreTableName = new ArrayList<>();
