@@ -11,15 +11,16 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DocumentGenerationUtil {
     public static void main(String[] args) {
         //数据源
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        hikariConfig.setJdbcUrl("jdbc:mysql://172.19.42.223:9004/guoshou_eam?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true");
-        hikariConfig.setUsername("guoshoucaixian");
-        hikariConfig.setPassword("ufkOU6mHd7GJVTJK");
+        hikariConfig.setDriverClassName("oracle.jdbc.OracleDriver");
+        hikariConfig.setJdbcUrl("jdbc:oracle:thin:@//10.0.4.109:1521/hcfpdb_dev");
+        hikariConfig.setUsername("hcf_expense");
+        hikariConfig.setPassword("Hcf#KE2V");
         //设置可以获取tables remarks信息
         hikariConfig.addDataSourceProperty("useInformationSchema", "true");
         hikariConfig.setMinimumIdle(2);
@@ -36,7 +37,8 @@ public class DocumentGenerationUtil {
                 //生成模板实现
                 .produceType(EngineTemplateType.freemarker)
                 //自定义文件名称
-                .fileName("guoshou_eam2022-12-21").build();
+                .fileName("中韩_expense2023-12-26").build();
+//                .fileName("招商信诺_expense2023-07-11").build();
 
         //忽略表
         ArrayList<String> ignoreTableName = new ArrayList<>();
@@ -48,10 +50,27 @@ public class DocumentGenerationUtil {
         //忽略表后缀
         ArrayList<String> ignoreSuffix = new ArrayList<>();
         ignoreSuffix.add("_test");
+
+        List<String> designatedTableName = new ArrayList<>();
+        designatedTableName.add("CUX_SALARY_INTERFACE");
+//        designatedTableName.add("csh_payment_requisition_line");
+//        designatedTableName.add("csh_payment_requisition_dist");
+//
+//        designatedTableName.add("exp_prepayment_req_release");
+//
+//        designatedTableName.add("csh_repayment_head");
+//        designatedTableName.add("csh_transaction_detail");
+//        designatedTableName.add("csh_transaction_detail_req");
+//
+//        designatedTableName.add("exp_application_header");
+//        designatedTableName.add("exp_application_line");
+//        designatedTableName.add("exp_application_line_dist");
+
+
         ProcessConfig processConfig = ProcessConfig.builder()
                 //指定生成逻辑、当存在指定表、指定表前缀、指定表后缀时，将生成指定表，其余表不生成、并跳过忽略表配置
                 //根据名称指定表生成
-                .designatedTableName(new ArrayList<>())
+                .designatedTableName(designatedTableName)
                 //根据表前缀生成
                 .designatedTablePrefix(new ArrayList<>())
                 //根据表后缀生成
